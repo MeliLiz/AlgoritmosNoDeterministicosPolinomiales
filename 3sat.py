@@ -20,11 +20,13 @@ def fase_verificadora(clausulas, diccionario):
                 if variables[variable]:
                     romper = True
                     break # La clausula es verdadera
+                
         if not romper:
-            return False      
+            return False  
+            
     return True
     
-# Funcion que devuelve un diccionario con las variables y su valor (False)
+# Funcion que devuelve un diccionario con las variables y su valor predeterminado(False)
 def vars(clausulas):
     variables = {}
     for clausula in clausulas:
@@ -41,10 +43,14 @@ if __name__=="__main__":
     
     for i in range(len(clausulas)):
         clausulas[i] = clausulas[i].split("+")
+        for j in range(len(clausulas[i])):
+            clausulas[i][j] = clausulas[i][j].strip()
         
     variables = vars(clausulas)
-    asignacion_vars = fase_adivinadora(variables)
-        
     print(clausulas)
+    fase_adivinadora(variables)
+    print(variables)
+    decision = fase_verificadora(clausulas, variables)
+    print(decision)
     
     
