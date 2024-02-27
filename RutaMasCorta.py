@@ -47,7 +47,7 @@ def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
                 #Verificar si todos los vértices marcados fueron visitados    
                 for vertice in vertices_elegidos:
                     if matriz[0][vertice] == 0:
-                        print("No se visitaron todos los vértices que inciden en las aristas elegidas")
+                        print("No es una trayectoria")
                         return False
                     
                 return True
@@ -92,7 +92,7 @@ def crear_matriz_adyacencias(aristas, num_vertices):
 
 def dfs(matriz_adyacencias, vertice):
     
-    if matriz_adyacencias[0][vertice] == -1:
+    if matriz_adyacencias[0][vertice] == 0:
         
         matriz_adyacencias[0][vertice] = -1
         matriz_adyacencias[vertice][0] = -1
@@ -101,7 +101,9 @@ def dfs(matriz_adyacencias, vertice):
                 
         for i in range(1, len(fila)):
             if fila[i] != 0:
+                #print("dfs en (",vertice, ",", i, ")")
                 matriz_adyacencias = dfs(matriz_adyacencias, i)
+                #imprimir_matriz(matriz_adyacencias)
             
     return matriz_adyacencias
 
@@ -154,5 +156,9 @@ if __name__=="__main__":
     print(respuesta)
     #respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices))
     
+    
+    m = crear_matriz_adyacencias(elegidas, len(vertices))
+    m = dfs(m, vertice_inicial)
+    imprimir_matriz(m)
     
     
