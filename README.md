@@ -1,2 +1,30 @@
-# AlgoritmosNoDeterministicosPolinomiales
-Algoritmos de ruta mas corta y 3SAT
+# Algoritmos no deterministicos polinomiales
+Algoritmos de ruta mas corta y 3SAT con fase adivinadora y fase verificadora
+
+Compitar con: python3 <Nombre_archivo>
+
+## Algoritmo de ruta más corta
+El programa trabaja dado un archivo txt nombrado RutaMasCorta.txt con un ejemplar de gráfica de la forma:
+
+1,2,3,4,5,6,7,8,9,10  
+2,3:8  
+4,5:1  
+8,9:3  
+3,1:4  
+5,1:5  
+7,8:20  
+6,4:4  
+8,3:7  
+6,7:1  
+2,5:3  
+7,4:2  
+9,10,1
+
+Un número k elegido de forma arbitraria en el programa, el vértice inicial escogido como el primer vértice que aparece en el archivo txt y un vértice final escogido aleatoriamente de los otros vértices dados en el txt.
+
+## Algoritmo del 3SAT
+El programa trabaja dado un archivo txt llamado 3sat.txt con una fórmula lógica con la forma:
+(x + -y + z) * (x + y + z) * (-x + -y + -z) * (-x + y + -z)
+
+
+
