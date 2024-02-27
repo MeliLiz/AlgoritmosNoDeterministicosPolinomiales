@@ -38,8 +38,25 @@ def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
                     break
             
             if final:
+                
                 matriz = bfs(matriz, u_inicial)
-                #Verificar si todos los vértices marcados fueron visitados
+                
+                #Obtener los vértices en los que incide alguna arista elegida
+                vertices_elegidos = []
+                for arista in elegidas:
+                    if arista[0] not in vertices_elegidos:
+                        vertices_elegidos.append(arista[0])
+                    
+                    if arista[1] not in vertices_elegidos:
+                        vertices_elegidos.append(arista[1])
+                    
+                #Verificar si todos los vértices marcados fueron visitados    
+                for vertice in vertices_elegidos:
+                    if matriz[0][vertice] == 0:
+                        return False
+                    
+                return True
+                    
             else:
                 return False  
         else:
@@ -64,14 +81,15 @@ def crear_matriz_adyacencias(aristas, num_vertices):
 
 def bfs(matriz_adyacencias, vertice):
     
-    matriz_adyacencias[0][vertice] = -1
-    matriz_adyacencias[vertice][0] = -1
-    
-    fila = matriz_adyacencias[vertice]
-            
-    for i in range(1, len(fila)):
-        if fila[i] != 0:
-            matriz_adyacencias = bfs(matriz_adyacencias, i)
+    if matriz_adyacencias[0][vertice] == -1:
+        matriz_adyacencias[0][vertice] = -1
+        matriz_adyacencias[vertice][0] = -1
+        
+        fila = matriz_adyacencias[vertice]
+                
+        for i in range(1, len(fila)):
+            if fila[i] != 0:
+                matriz_adyacencias = bfs(matriz_adyacencias, i)
             
     return matriz_adyacencias
             
@@ -97,6 +115,8 @@ if __name__=="__main__":
         adyacencias.append(re.split('[:,]',cadenas[i].replace("\n","")))
     
     elegidas = fase_adivinadora(adyacencias)
+    respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices))
+    
     print("Vertices: ",vertices)
     print("Aristas", adyacencias)
     print ("Elegidas: ",elegidas)  
