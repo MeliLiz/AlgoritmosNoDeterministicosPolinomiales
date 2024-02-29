@@ -19,7 +19,7 @@ def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
     suma = len(elegidas) # Obtenemos la suma de los pesos de las aristas
         
     if suma > k: # Si la suma es mayor a k, no es lo que buscamos
-        print("La suma de los pesos de las aristas elegidas es mayor a k")
+        print("El numero de aristas elegidas es mayor a k")
         return False
     else: #Verificar si es una u-v trayectoria
         
@@ -97,9 +97,9 @@ def crear_matriz_adyacencias(aristas, num_vertices):
     return matriz
 
 # Realizar un recorrido en profundidad
-# Recibe: Matriz de adyacencias, int vertice desde donde empieza
+# Recibe: Matriz de adyacencias, int vertice desde donde empieza, int vertice final de la trayectoria
 # Regresa: Matriz de adyacencias con los vértices visitados marcados con -1 en la fila 0 y columna 0
-def dfs(matriz_adyacencias, vertice):
+def dfs(matriz_adyacencias, vertice, vertice_final):
     
     if matriz_adyacencias[0][vertice] == 0:
         
@@ -129,7 +129,7 @@ def imprimir_matriz(matriz):
         
 
 if __name__=="__main__":
-    k = 3
+    k = 10
     archivo = open("RutaMasCorta.txt") #Abrir el archivo
     cadenas = [] #Lista para guardar las cadenas del archivo
     while(True): #Leer el archivo
@@ -143,32 +143,28 @@ if __name__=="__main__":
     for vertice in vertices:
         vertices[vertices.index(vertice)] = int(vertice)
         
-    print("Vertices: ",vertices)
+        
     vertice_inicial = vertices[0] #Seleccionar un vertice inicial
-    print("Vertice inicial: ",vertice_inicial)
     vertice_final = vertices[r.randint(1, len(vertices)-1)] #Seleccionar un vertice final
-    print("Vertice final: ",vertice_final)
+    print("Inicilal: ", vertice_inicial, " Final: ", vertice_final)
     
     adyacencias = [] #Agregar las aristas
     for i in range(1, len(cadenas)):
-        adyacencias.append(re.split('[,]',cadenas[i].replace("\n","")))
+        adyacencias.append(cadenas[i].replace("\n","").split(","))
     
-    for arista in adyacencias:
+    for arista in adyacencias: #Convertir las aristas a enteros
         arista[0] = int(arista[0])
         arista[1] = int(arista[1])
-        
-    print("Aristas", adyacencias)
-    
-    elegidas = fase_adivinadora(adyacencias)
-    print ("Elegidas: ",elegidas)  
-    
-    respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices))
-    print(respuesta)
-    #respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices))
     
     
-    m = crear_matriz_adyacencias(elegidas, len(vertices))
-    m = dfs(m, vertice_inicial)
-    imprimir_matriz(m)
+    elegidas = fase_adivinadora(adyacencias) # Seleccionar las aristas que formarán parte de la trayectoria propuesta por la fase adivinadora
+    print("Posible uv-trayectoria de la fase adivinadora: ", elegidas)
+    
+    respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices)) # Verificar si la trayectoria propuesta por la fase adivinadora es correcta
+    print("Fase verificadora: ",respuesta)
+    
+    #r = fase_verificadora([[6,4],[6,7]], k, 4,7,10)
+    #print(r)
+
     
     
