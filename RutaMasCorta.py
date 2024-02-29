@@ -42,7 +42,7 @@ def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
             
             if final:
                 
-                matriz = dfs(matriz, u_inicial) # Hacemos dfs a partir del vértice inicial
+                matriz = dfs(matriz, u_inicial,v_final) # Hacemos dfs a partir del vértice inicial
                 
                 #Obtener los vértices en los que incide alguna arista elegida
                 vertices_elegidos = obtener_vertices(elegidas)
@@ -111,7 +111,7 @@ def dfs(matriz_adyacencias, vertice, vertice_final):
         for i in range(1, len(fila)):
             if fila[i] != 0:
                 #print("dfs en (",vertice, ",", i, ")")
-                matriz_adyacencias = dfs(matriz_adyacencias, i)
+                matriz_adyacencias = dfs(matriz_adyacencias, i, vertice_final)
                 #imprimir_matriz(matriz_adyacencias)
             
     return matriz_adyacencias
