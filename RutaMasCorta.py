@@ -10,13 +10,13 @@ def fase_adivinadora(aristas):
             elegidas.append(arista)
     return elegidas
 
-#Fase verificadora: Verificar su la suma de los pesos de las aristas elegidas es menor o igual a k, 
+#Fase verificadora: Verificar si el numero de aristas elegidas es menor o igual a k, 
 # y si es una u-v trayectoria con las aristas elegidas
-# Recibe: Lista de aristas de la forma [u, v, peso], int k, int vértice inicial, int vértice final, int numero de vertices
+# Recibe: Lista de aristas de la forma [u, v], int k, int vértice inicial, int vértice final, int numero de vertices
 # Regresa: True si es una u-v trayectoria de peso < = k, False en otro caso
 def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
     
-    suma = sumar_pesos(elegidas) # Obtenemos la suma de los pesos de las aristas
+    suma = len(elegidas) # Obtenemos la suma de los pesos de las aristas
         
     if suma > k: # Si la suma es mayor a k, no es lo que buscamos
         print("La suma de los pesos de las aristas elegidas es mayor a k")
@@ -63,7 +63,7 @@ def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
             return False 
         
 # Obtener los vertices en los que inciden las aristas
-# Recibe: Lista de aristas de la forma [u, v, peso]
+# Recibe: Lista de aristas de la forma [u, v]
 # Regresa: Lista de vertices
 def obtener_vertices(aristas):
     vertices = []
@@ -74,17 +74,9 @@ def obtener_vertices(aristas):
             vertices.append(arista[1])
     return vertices
        
-# Sumar los pesos de las aristas
-# Recibe: Lista de aristas de la forma [u, v, peso]
-# Regresa: Suma de los pesos de las aristas
-def sumar_pesos(aristas):
-    suma = 0
-    for arista in aristas:
-        suma += arista[2]
-    return suma
-    
+
 # Crear matriz de adyacencias
-# Recibe: Lista de aristas de la forma [u, v, peso], int numero de vertices
+# Recibe: Lista de aristas de la forma [u, v], int numero de vertices
 # Regresa: Matriz de adyacencias con la fila 0 y columna 0 vacías
 def crear_matriz_adyacencias(aristas, num_vertices):
     #Inicializar matriz
@@ -99,8 +91,8 @@ def crear_matriz_adyacencias(aristas, num_vertices):
     for arista in aristas:
         u = arista[0]
         v = arista[1]
-        matriz[u][v] = arista[2]
-        matriz[v][u] = arista[2]
+        matriz[u][v] = 1
+        matriz[v][u] = 1
         
     return matriz
 
@@ -137,7 +129,7 @@ def imprimir_matriz(matriz):
         
 
 if __name__=="__main__":
-    k = 25
+    k = 3
     archivo = open("RutaMasCorta.txt") #Abrir el archivo
     cadenas = [] #Lista para guardar las cadenas del archivo
     while(True): #Leer el archivo
@@ -159,12 +151,11 @@ if __name__=="__main__":
     
     adyacencias = [] #Agregar las aristas
     for i in range(1, len(cadenas)):
-        adyacencias.append(re.split('[:,]',cadenas[i].replace("\n","")))
+        adyacencias.append(re.split('[,]',cadenas[i].replace("\n","")))
     
     for arista in adyacencias:
         arista[0] = int(arista[0])
         arista[1] = int(arista[1])
-        arista[2] = int(arista[2])
         
     print("Aristas", adyacencias)
     
