@@ -1,4 +1,7 @@
-# Algoritmos no deterministicos polinomiales
+# Algoritmos no determinísticos polinomiales
+// Complejidad Computacional
+// Melissa Lizbeth Fernández Blancas
+
 Algoritmos de ruta mas corta y 3SAT con fase adivinadora y fase verificadora
 
 Compilar con: python3 <Nombre_archivo>

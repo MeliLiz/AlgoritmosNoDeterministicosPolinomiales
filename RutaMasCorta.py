@@ -1,5 +1,4 @@
 import random as r
-import re
 
 # Fase adivinadora: Seleccionar las aristas que formarán parte de la trayectoria usando random
 def fase_adivinadora(aristas):
