@@ -37,7 +37,13 @@ def vars(clausulas):
     return variables
 
 if __name__=="__main__":
-    archivo = open("3sat.txt") #Abrir el archivo
+    
+    archivo = input("Nombre del archivo del ejemplar: ")
+    try:
+        archivo = open(archivo) #Abrir el archivo  que se quiere leer
+    except:
+        print("\nNo se encontró el archivo, se abrirá el archivo 3sat.txt\n")
+        archivo = open("3sat.txt") #Abrir el archivo
     
     clausulas = (archivo.readline()).strip().replace("(", "").replace(")", "").split("*")
     
@@ -47,10 +53,10 @@ if __name__=="__main__":
             clausulas[i][j] = clausulas[i][j].strip()
         
     variables = vars(clausulas)
-    print(clausulas)
+    print("\nClausulas: ",clausulas)
     fase_adivinadora(variables)
-    print(variables)
+    print("\nAsignación de verdad de la fase adivinadora: ",variables)
     decision = fase_verificadora(clausulas, variables)
-    print(decision)
+    print("\nResultado de la fase verificadora: ",decision)
     
     

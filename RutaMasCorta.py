@@ -140,7 +140,13 @@ def imprimir_matriz(matriz):
 
 if __name__=="__main__":
     k = 5
-    archivo = open("RutaMasCorta.txt") #Abrir el archivo
+    archivo = input("Nombre del archivo del ejemplar: ")
+    try:
+        archivo = open(archivo) #Abrir el archivo  que se quiere leer
+    except:
+        print("\nNo se encontró el archivo, se abrirá el archivo RutaMasCorta.txt\n")
+        archivo = open("RutaMasCorta.txt") #Abrir el archivo
+    
     cadenas = [] #Lista para guardar las cadenas del archivo
     while(True): #Leer el archivo
         linea = archivo.readline()
@@ -156,7 +162,7 @@ if __name__=="__main__":
         
     vertice_inicial = vertices[0] #Seleccionar un vertice inicial
     vertice_final = vertices[r.randint(1, len(vertices)-1)] #Seleccionar un vertice final
-    print("Inicilal: ", vertice_inicial, " Final: ", vertice_final)
+    print("Vértice inicial: ", vertice_inicial, " Vértice final: ", vertice_final)
     
     adyacencias = [] #Agregar las aristas
     for i in range(1, len(cadenas)):
@@ -168,12 +174,12 @@ if __name__=="__main__":
     
     
     elegidas = fase_adivinadora(adyacencias) # Seleccionar las aristas que formarán parte de la trayectoria propuesta por la fase adivinadora
-    print("Posible uv-trayectoria de la fase adivinadora: ", elegidas)
+    print("\nPosible uv-trayectoria dada por la fase adivinadora: ", elegidas)
     
     respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices)) # Verificar si la trayectoria propuesta por la fase adivinadora es correcta
-    print("Fase verificadora: ",respuesta)
+    print("\nFase verificadora: ",respuesta)
     
-    imprimir_matriz(crear_matriz_adyacencias(elegidas, len(vertices)))
+    #imprimir_matriz(crear_matriz_adyacencias(elegidas, len(vertices)))
     
     #El siguiente ejemplo debe dar True con el ejemplar del archivo RutaMasCorta.txt
     #r = fase_verificadora([[6,4],[6,7]], k, 4,7,10)
