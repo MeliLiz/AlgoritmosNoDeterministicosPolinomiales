@@ -24,42 +24,52 @@ def fase_verificadora(elegidas, k, u_inicial, v_final, num_vertices):
     else: #Verificar si es una u-v trayectoria
         
         matriz = crear_matriz_adyacencias(elegidas, num_vertices) # Crear matriz de adyacencias de acuerdo a las aristas elegidas
+        vertices_elegidos = obtener_vertices(elegidas) # Obtener los vértices en los que inciden las aristas elegidas
         
-        #Verificar Si alguna arista incide en u_inicial
+        #Verificar Si alguna arista incide en u_inicial y si alguna incide en u final
         inicial = False
-        for num in matriz[u_inicial]:
-            if num != 0:
-                inicial = True
-                break
-         
-        if inicial:
-            #Verificar Si alguna arista incide en v_final
-            final = False 
-            for num in matriz[v_final]:
-                if num != 0:
+        final = False
+        for vertice in vertices_elegidos:
+            if not inicial or not final:
+                if vertice == u_inicial:
+                    inicial = True
+                elif vertice == v_final:
                     final = True
-                    break
+            else:
+                break
             
-            if final:
-                
-                matriz = dfs(matriz, u_inicial,v_final) # Hacemos dfs a partir del vértice inicial
-                
-                #Obtener los vértices en los que incide alguna arista elegida
-                vertices_elegidos = obtener_vertices(elegidas)
-                    
-                #Verificar si todos los vértices marcados fueron visitados    
-                for vertice in vertices_elegidos:
-                    if matriz[0][vertice] == 0:
+        # Si hay aristas que inciden en el vértice inicial y final
+        if inicial and final:
+            
+            for vertice in vertices_elegidos: # Verificar si es una trayectoria
+                fila = matriz[vertice]
+                contador = 0 # Contador de aristas de la trayectoria propuesta que inciden en el vértice actual
+                for i in fila:
+                        if i != 0:
+                            contador += 1
+                            
+                if vertice != u_inicial and vertice != v_final: # Si no es el vértice inicial o final
+                    if contador > 2: # No puede terner más de 2 aristas que incidan en él
                         print("No es una trayectoria")
                         return False
-                    
-                return True
-                    
-            else:
-                print("No hay aristas que incidan en el vértice final")
-                return False  
-        else:
-            print("No hay aristas que incidan en el vértice inicial")
+                else:
+                    if contador > 1: # Si es el vértice inicial o final, no puede tener más de 1 arista que incida en él
+                        print("No es una trayectoria")
+                        return False
+                
+            
+            matriz = dfs(matriz, u_inicial,v_final) # Hacemos dfs a partir del vértice inicial
+                
+            #Verificar si todos los vértices marcados fueron visitados    
+            for vertice in vertices_elegidos:
+                if matriz[0][vertice] == 0:
+                    print("No es una trayectoria")
+                    return False
+                
+            return True
+        
+        else: # Si no hay aristas que incidan en el vértice inicial o final
+            print("No hay aristas que incidan en el vértice inicial o final")
             return False 
         
 # Obtener los vertices en los que inciden las aristas
@@ -129,7 +139,7 @@ def imprimir_matriz(matriz):
         
 
 if __name__=="__main__":
-    k = 10
+    k = 5
     archivo = open("RutaMasCorta.txt") #Abrir el archivo
     cadenas = [] #Lista para guardar las cadenas del archivo
     while(True): #Leer el archivo
@@ -163,6 +173,9 @@ if __name__=="__main__":
     respuesta = fase_verificadora(elegidas, k, vertice_inicial, vertice_final, len(vertices)) # Verificar si la trayectoria propuesta por la fase adivinadora es correcta
     print("Fase verificadora: ",respuesta)
     
+    imprimir_matriz(crear_matriz_adyacencias(elegidas, len(vertices)))
+    
+    #El siguiente ejemplo debe dar True con el ejemplar del archivo RutaMasCorta.txt
     #r = fase_verificadora([[6,4],[6,7]], k, 4,7,10)
     #print(r)
 
