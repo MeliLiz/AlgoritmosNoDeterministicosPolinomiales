@@ -53,7 +53,7 @@ if __name__=="__main__":
             clausulas[i][j] = clausulas[i][j].strip()
         
     variables = vars(clausulas)
-    print("\nClausulas: ",clausulas)
+    print("\nEjemplar de entrada: \nClausulas: ",clausulas)
     fase_adivinadora(variables)
     print("\nAsignación de verdad de la fase adivinadora: ",variables)
     decision = fase_verificadora(clausulas, variables)

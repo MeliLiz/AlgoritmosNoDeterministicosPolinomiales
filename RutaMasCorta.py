@@ -157,11 +157,12 @@ if __name__=="__main__":
     vertices = (cadenas[0].replace("\n", "")).split(",") #Los vertices son la primer cadena del archivo
     for vertice in vertices:
         vertices[vertices.index(vertice)] = int(vertice)
-        
+      
+    print("\nEjemplar de entrada: ")  
+    print("\nVertices: ", vertices)
         
     vertice_inicial = vertices[0] #Seleccionar un vertice inicial
     vertice_final = vertices[r.randint(1, len(vertices)-1)] #Seleccionar un vertice final
-    print("Vértice inicial: ", vertice_inicial, " Vértice final: ", vertice_final)
     
     adyacencias = [] #Agregar las aristas
     for i in range(1, len(cadenas)):
@@ -171,6 +172,10 @@ if __name__=="__main__":
         arista[0] = int(arista[0])
         arista[1] = int(arista[1])
     
+    print("Aristas: ", adyacencias)
+    print("Valor de k: ", k)
+    
+    print("\nVértice inicial: ", vertice_inicial, " Vértice final: ", vertice_final)
     
     elegidas = fase_adivinadora(adyacencias) # Seleccionar las aristas que formarán parte de la trayectoria propuesta por la fase adivinadora
     print("\nPosible uv-trayectoria dada por la fase adivinadora: ", elegidas)
